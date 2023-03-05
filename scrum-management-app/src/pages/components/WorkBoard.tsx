@@ -1,17 +1,7 @@
 import { useState } from "react";
 import { gql, useQuery } from "@apollo/client";
 
-const GET_TASKS = gql`
-  query getTasks {
-    task {
-      task_ID
-      title
-      description
-      assignee
-      progress
-    }
-  }
-`;
+import { GET_TASKS } from "@/graphQL/queries";
 
 const WorkBoard = () => {
   const [tasks, setTasks] = useState<any>();

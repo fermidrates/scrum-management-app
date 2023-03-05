@@ -2,17 +2,9 @@ import { gql, useMutation } from "@apollo/client";
 import { FormikErrors, useFormik } from "formik";
 import { useRouter } from "next/router";
 
-import { RegisterFormType } from "@/types/userTypes";
+import { INSERT_USER } from "@/graphQL/mutations";
 
-const INSERT_USER = gql`
-  mutation insertUser($username: String!, $role: String!, $squad: String) {
-    insert_user_one(
-      object: { username: $username, role: $role, squad: $squad }
-    ) {
-      __typename
-    }
-  }
-`;
+import { RegisterFormType } from "@/types/userTypes";
 
 const Register = () => {
   const router = useRouter();

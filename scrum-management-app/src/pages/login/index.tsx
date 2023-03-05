@@ -1,22 +1,18 @@
+import { useContext } from "react";
 import { gql, useLazyQuery } from "@apollo/client";
 import { FormikErrors, useFormik } from "formik";
 import { useRouter } from "next/router";
 
+import { GET_USER_BY_USERNAME } from "@/graphQL/queries";
+
 import { LoginFormType } from "@/types/userTypes";
 
-const GET_USER = gql`
-  query getUser($username: String!) {
-    user_aggregate(where: { username: { _eq: $username } }) {
-      nodes {
-        user_ID
-        username
-      }
-    }
-  }
-`;
+import UserContext from "@/contexts/UserContext";
 
 const Login = () => {
   const router = useRouter();
+
+  const { user, setUser } = useContext(UserContext);
 
   const { values, errors, handleChange, handleSubmit } = useFormik({
     initialValues: {
@@ -36,11 +32,11 @@ const Login = () => {
       return errors;
     },
     onSubmit: () => {
-      getUser();
+      getUserByUsername();
     },
   });
 
-  const [getUser] = useLazyQuery(GET_USER, {
+  const [getUserByUsername] = useLazyQuery(GET_USER_BY_USERNAME, {
     variables: {
       username: values.username,
     },

@@ -1,14 +1,20 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useLazyQuery } from "@apollo/client";
 
 import ClientOnly from "@/components/ClientOnly";
 import WorkBoard from "./components/WorkBoard";
+
+import UserContext from "@/contexts/UserContext";
+
+import { GET_USER_BY_USERNAME } from "@/graphQL/queries";
 
 import styles from "@/styles/Home.module.css";
 
 export default function Home() {
   const router = useRouter();
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
     const isAuthenticated = sessionStorage.getItem("userID");
