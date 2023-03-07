@@ -1,4 +1,4 @@
-import {gql} from "@apollo/client";
+import { gql } from "@apollo/client";
 
 export const GET_TASKS = gql`
   query getTasks {
@@ -23,4 +23,4 @@ export const GET_USER_BY_USERNAME = gql`
       }
     }
   }
-`
+`;

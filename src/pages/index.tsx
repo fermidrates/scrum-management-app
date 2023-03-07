@@ -8,8 +8,6 @@ import WorkBoard from "./components/WorkBoard";
 
 import UserContext from "@/contexts/UserContext";
 
-import { GET_USER_BY_USERNAME } from "@/graphQL/queries";
-
 import styles from "@/styles/Home.module.css";
 
 export default function Home() {

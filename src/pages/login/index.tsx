@@ -1,11 +1,12 @@
 import { useContext } from "react";
-import { gql, useLazyQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import { FormikErrors, useFormik } from "formik";
 import { useRouter } from "next/router";
 
 import { GET_USER_BY_USERNAME } from "@/graphQL/queries";
 
 import { LoginFormType } from "@/types/userTypes";
+import { GetUserByUsernameSchema } from "@/graphQL/schemaType";
 
 import UserContext from "@/contexts/UserContext";
 
@@ -36,27 +37,30 @@ const Login = () => {
     },
   });
 
-  const [getUserByUsername] = useLazyQuery(GET_USER_BY_USERNAME, {
-    variables: {
-      username: values.username,
-    },
-    onCompleted: (res) => {
-      const username = res.user_aggregate.nodes?.[0]?.username;
-      const userID = res.user_aggregate.nodes?.[0]?.user_ID;
+  const [getUserByUsername] = useLazyQuery<GetUserByUsernameSchema>(
+    GET_USER_BY_USERNAME,
+    {
+      variables: {
+        username: values.username,
+      },
+      onCompleted: (res) => {
+        const username = res.user_aggregate.nodes?.[0]?.username;
+        const userID = res.user_aggregate.nodes?.[0]?.user_ID;
 
-      if (username && username === values.password) {
-        // TODO: tell user login is successful
-        router.push("/");
-        sessionStorage.setItem("userID", userID);
-      } else {
-        // TODO: tell user / password combination is wrong
-        console.error("login failed");
-      }
-    },
-    onError: () => {
-      // TODO: username is not found, login failed
-    },
-  });
+        if (username && username === values.password) {
+          // TODO: tell user login is successful
+          router.push("/");
+          sessionStorage.setItem("userID", userID);
+        } else {
+          // TODO: tell user / password combination is wrong
+          console.error("login failed");
+        }
+      },
+      onError: () => {
+        // TODO: username is not found, login failed
+      },
+    }
+  );
 
   return (
     <form onSubmit={handleSubmit}>
