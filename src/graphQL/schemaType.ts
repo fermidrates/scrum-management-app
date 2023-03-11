@@ -13,7 +13,7 @@ export type TaskType = {
   task_ID: string;
   title: string;
   description: string;
-  assignee: string;
+  assignee?: string;
   progress: ProgressType;
 };
 

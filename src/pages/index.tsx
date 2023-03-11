@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useLazyQuery } from "@apollo/client";
 
 import ClientOnly from "@/components/ClientOnly";
-import WorkBoard from "./components/WorkBoard";
+import WorkBoard from "./components/WorkBoard/WorkBoard";
 
 import UserContext from "@/contexts/UserContext";
 
