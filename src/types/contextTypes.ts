@@ -3,3 +3,8 @@ export type UserContextType = {
   role: string;
   squad: string;
 };
+
+export type SelectType = {
+  label: string;
+  value: string;
+};

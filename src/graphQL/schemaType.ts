@@ -12,7 +12,7 @@ export type RoleType = "backend" | "frontend" | "qa" | "product";
 export type TaskType = {
   task_ID: string;
   title: string;
-  description: string;
+  description?: string;
   assignee?: string;
   progress: ProgressType;
 };
