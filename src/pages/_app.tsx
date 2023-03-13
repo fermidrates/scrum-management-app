@@ -10,8 +10,6 @@ import UserContext from "@/contexts/UserContext";
 import { USER_CONTEXT_INITIAL_VALUE } from "@/constants/constants";
 import { UserContextType } from "@/types/contextTypes";
 
-import "@/styles/globals.css";
-
 export default function App({ Component, pageProps }: AppProps) {
   const [user, setUser] = useState<UserContextType>(USER_CONTEXT_INITIAL_VALUE);
 

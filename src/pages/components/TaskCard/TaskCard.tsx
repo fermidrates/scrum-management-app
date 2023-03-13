@@ -1,5 +1,5 @@
 import React from "react";
-import { Card } from "@mui/material";
+import { Card, Typography } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 
 import { useDrag } from "react-dnd/dist/hooks";
@@ -29,8 +29,8 @@ const TaskCard = ({ task }: TaskProps) => {
       }}
     >
       <CardContent>
-        {task.title}
-        {task?.assignee}
+        <Typography>{task.title}</Typography>
+        <Typography variant="subtitle2">{task?.assignee}</Typography>
       </CardContent>
     </Card>
   );

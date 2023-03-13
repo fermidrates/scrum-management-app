@@ -2,6 +2,14 @@ import { useContext } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { FormikErrors, useFormik } from "formik";
 import { useRouter } from "next/router";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Grid,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 import { GET_USER_BY_USERNAME } from "@/graphQL/queries";
 
@@ -15,11 +23,12 @@ const Login = () => {
 
   const { user, setUser } = useContext(UserContext);
 
-  const { values, errors, handleChange, handleSubmit } = useFormik({
+  const { values, errors, handleChange, handleSubmit, isValid } = useFormik({
     initialValues: {
       username: "",
       password: "",
     },
+    validateOnMount: true,
     validate: (values) => {
       const errors: FormikErrors<LoginFormType> = {};
 
@@ -37,9 +46,8 @@ const Login = () => {
     },
   });
 
-  const [getUserByUsername] = useLazyQuery<GetUserByUsernameSchema>(
-    GET_USER_BY_USERNAME,
-    {
+  const [getUserByUsername, { loading }] =
+    useLazyQuery<GetUserByUsernameSchema>(GET_USER_BY_USERNAME, {
       variables: {
         username: values.username,
       },
@@ -59,15 +67,54 @@ const Login = () => {
       onError: () => {
         // TODO: username is not found, login failed
       },
-    }
-  );
+    });
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input name="username" onChange={handleChange} />
-      <input name="password" onChange={handleChange} type="password" />
-      <button type="submit">Submit</button>
-    </form>
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
+      <Grid
+        style={{
+          display: "flex",
+          gap: "8px",
+          flexDirection: "column",
+          border: "1px solid grey",
+          borderRadius: "4px",
+          padding: "20px",
+          width: "350px",
+        }}
+      >
+        <Typography>Login</Typography>
+        <TextField
+          id="input-username"
+          label="Username"
+          name="username"
+          onChange={handleChange}
+        />
+        <TextField
+          id="input-password"
+          label="Password"
+          name="password"
+          onChange={handleChange}
+          type="password"
+        />
+        <Button
+          variant="contained"
+          type="submit"
+          disabled={!isValid || loading}
+          fullWidth
+        >
+          {loading ? <CircularProgress size={24} color="warning" /> : "Login"}
+        </Button>
+      </Grid>
+    </Box>
   );
 };
 

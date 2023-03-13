@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { useDrop } from "react-dnd";
+import { Button, Grid } from "@mui/material";
 
-import TaskCard from "../TaskCard/TaskCard";
+import TaskContainer from "../TaskContainer/TaskContainer";
 import UpsertTaskModal from "../UpsertTaskModal/UpsertTaskModal";
 
 import { GET_TASKS } from "@/graphQL/queries";
@@ -70,40 +71,39 @@ const WorkBoard = () => {
   return (
     <>
       <div style={{ display: "block" }}>
-        <button style={{ padding: "8px" }} onClick={handleUpsertTaskModal}>
-          Add task
-        </button>
+        <Grid
+          style={{
+            display: "flex",
+            justifyContent: "end",
+            marginBottom: "8px",
+          }}
+        >
+          <Button
+            variant="contained"
+            style={{ padding: "8px" }}
+            onClick={handleUpsertTaskModal}
+          >
+            Add task
+          </Button>
+        </Grid>
         <div style={{ display: "flex", gap: "16px" }}>
-          <div style={{ display: "block", width: "260px" }} ref={drop}>
-            Backlog
-            {backlogTasks?.map((task: TaskType) => {
-              return <TaskCard task={task} />;
-            })}
-          </div>
-          <div style={{ display: "block", width: "260px" }} ref={drop}>
-            In Progress
-            {inProgressTasks?.map((task: TaskType) => {
-              return <TaskCard task={task} />;
-            })}
-          </div>
-          <div style={{ display: "block", width: "260px" }} ref={drop}>
-            Staging
-            {stagingTasks?.map((task: TaskType) => {
-              return <TaskCard task={task} />;
-            })}
-          </div>
-          <div style={{ display: "block", width: "260px" }} ref={drop}>
-            To Production
-            {toProductionTasks?.map((task: TaskType) => {
-              return <TaskCard task={task} />;
-            })}
-          </div>
-          <div style={{ display: "block", width: "260px" }} ref={drop}>
-            Production
-            {productionTasks?.map((task: TaskType) => {
-              return <TaskCard task={task} />;
-            })}
-          </div>
+          <TaskContainer drop={drop} title="Backlog" tasks={backlogTasks} />
+          <TaskContainer
+            drop={drop}
+            title="In Progress"
+            tasks={inProgressTasks}
+          />
+          <TaskContainer drop={drop} title="Staging" tasks={stagingTasks} />
+          <TaskContainer
+            drop={drop}
+            title="To Production"
+            tasks={toProductionTasks}
+          />
+          <TaskContainer
+            drop={drop}
+            title="Production"
+            tasks={productionTasks}
+          />
         </div>
       </div>
       <UpsertTaskModal

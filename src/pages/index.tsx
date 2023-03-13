@@ -1,14 +1,11 @@
 import { useContext, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useLazyQuery } from "@apollo/client";
 
 import ClientOnly from "@/components/ClientOnly";
 import WorkBoard from "./components/WorkBoard/WorkBoard";
 
 import UserContext from "@/contexts/UserContext";
-
-import styles from "@/styles/Home.module.css";
 
 export default function Home() {
   const router = useRouter();
@@ -29,7 +26,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
+      <main>
         <ClientOnly>
           <WorkBoard />
         </ClientOnly>
